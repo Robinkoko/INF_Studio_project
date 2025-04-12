@@ -1,0 +1,35 @@
+--현재 지역 띄우기 코드
+-- 필요한 서비스
+local TweenService = game:GetService("TweenService")
+
+-- UI 요소들
+local biomUI = script.Parent:WaitForChild("biomUI")
+local biomFrame = biomUI:WaitForChild("biomFrame")
+
+-- 다른 스크립트에서 바이옴 가져오기
+game.Players.PlayerAdded:Connect(function(player)
+    local biome = player:WaitForChild("leaderstats"):WaitForChild("biome")
+end)
+--오브젝트들
+local eastbiome = game.Workspace:WaitForChild("eastpart")
+local southbiome = game.Workspace:WaitForChild("southpart")
+local northbiome = game.Workspace:WaitForChild("northpart")
+local westbiome = game.Workspace:WaitForChild("westpart")
+-- 페이드 인 애니메이션 설정
+eastbiome.Touched:Connect(function()
+    --Todo : wtf?
+end)
+local fadeInInfo = TweenInfo.new(
+    1, -- 지속 시간 (초)
+    Enum.EasingStyle.Linear, -- 애니메이션 스타일
+    Enum.EasingDirection.In, -- 애니메이션 방향
+    0, -- 반복 횟수
+    false, -- 역방향 애니메이션 없음
+    0 -- 지연 시간 없음
+)
+
+-- Tween 설정 (투명도 1로 설정)
+local fadeInTween = TweenService:Create(biomFrame, fadeInInfo, {BackgroundTransparency = 0})
+
+biomFrame.Visible = true  -- biomFrame을 보이게 함
+fadeInTween:Play()  -- 애니메이션 실행
